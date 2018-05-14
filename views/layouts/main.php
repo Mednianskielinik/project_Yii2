@@ -28,8 +28,6 @@ AppAsset::register($this);
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-
     <link rel="shortcut icon" href="index.html#">
 
     <title><?= Html::encode($this->title) ?></title>
@@ -102,7 +100,6 @@ AppAsset::register($this);
                         ['label' => 'Главная', 'url' => ['/site/index']],
                         ['label' => 'О нас', 'url' => ['/site/about']],
                         ['label' => 'Смотреть блюда', 'url' => ['/site/order']],
-                        ['label' => 'Мой кабинет', 'url' => ['car/index'], 'visible' => !Yii::$app->user->isGuest],
                         ['label' => 'Регистрация', 'url' => ['site/signup'], 'visible' => Yii::$app->user->isGuest],
                         Yii::$app->user->isGuest ? (
                         ['label' => 'Войти', 'url' => ['/site/login']]
@@ -175,14 +172,21 @@ AppAsset::register($this);
     </div>
 </div>
 
-</div>
+<?php
+\yii\bootstrap\Modal::begin([
+        'header' => '<h2> Онлайн заказ </h2>',
+        'id' => 'cart',
+        'footer' => '<button type="button" class="btn btn-default"
+    data-dismiss="modal">Продолжить покупки </button> 
+    <button type = "button" class="btn btn-primary"> Оформить заказ</button> 
+     <button type = "button" class="btn btn-danger" onclick="clearCart()"> Очистить корзину</button> \''
+]);
+
+\yii\bootstrap\Modal::end();
+?>
 
 <span class="totop"><a href="index.html#"><i class="fa fa-angle-up"></i></a></span>
-
-<script type="text/javascript" src="js/jquery.themepunch.plugins.min.js"></script>
-<script type="text/javascript" src="js/jquery.themepunch.revolution.min.js"></script>
 <!-- FLEX SLIDER SCRIPTS  -->
-<script defer src="js/jquery.flexslider-min.js"></script>
 
 <?php $this->endBody() ?>
 </body>

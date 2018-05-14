@@ -13,6 +13,13 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+//        'urlManager' => [
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => false,
+//            'rules' => [
+//
+//            ],
+//        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'JOcGwR8bZTrNVxDmPmk5jM2kc-U6CU0a',
@@ -45,15 +52,6 @@ $config = [
             ],
         ],
         'db' => $db,
-
-//        'urlManager' => [
-//            'showScriptName' => false,
-//            'enablePrettyUrl' => true,
-//            'rules' => [
-//                'class' => 'app\components\SefRule', 'connectionId' => 'db'
-//            ]
-//        ],
-
     ],
     'params' => $params,
 ];

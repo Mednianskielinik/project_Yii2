@@ -1,4 +1,9 @@
 
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+<body>
 <div class="inner-page padd">
     <div class="shopping">
         <div class="container">
@@ -19,7 +24,7 @@
                                     </div>
 
                                     <div class="item-hover br-red hidden-xs"></div>
-                                    <a class="link hidden-xs" href="items.html#">I Like It</a>
+                                    <a href="<?= \yii\helpers\Url::to(['site/add', 'id' => $master->idProduct])?>" class="link hidden-xs add-to-cart" data-id="<?=$master->idProduct?>" >Заказать</a>
                                 </div>
                             </div>
                         <?php endforeach;?>
@@ -28,3 +33,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function showCart(cart) {
+            $('#cart .modal-body').html(cart);
+            $('#cart').modal();
+        }
+
+        $('.add-to-cart').click(function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            $.ajax({
+                url: '<?= \yii\helpers\Url::to(['site/add',''])?>',
+                data: {id: id},
+                type: 'GET',
+                success: function (res){
+                    if(!res) alert('Ошибка!');
+                    showCart(res);
+                },
+                error: function () {
+                    alert('Error!');
+                }
+            })
+        });
+    </script>
+</div>
+</body>
+</html>

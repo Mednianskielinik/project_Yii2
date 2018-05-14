@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\SignupForm;
-use app\models\Card;
+use app\models\Cart;
 use app\models\User;
 
 class SiteController extends Controller
@@ -77,12 +77,6 @@ class SiteController extends Controller
 
     }
 
-
-    public function actionRoom()
-    {
-        return $this->render('room');
-    }
-
 //    public function actionSearch($search = null)
 //    {
 //
@@ -111,29 +105,7 @@ class SiteController extends Controller
         return $this ->render('search', compact('masters'));
     }
 
-    public function actionAddComment()
-    {
 
-
-
-    }
-
-    public function actionAbout()
-    {
-        $model = new AboutForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Данные приняты');
-                return $this->refresh();
-            }
-            else{
-                Yii::$app->session->setFlash('error', 'Ошибка');
-            }
-        }
-
-        $masters = Comment::find()->all();
-        return $this ->render('about', compact('model', 'masters'));
-    }
     /**
      * Login action.
      *
@@ -201,17 +173,53 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionAbout()
+    {
+        $model = new AboutForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Данные приняты');
+                return $this->refresh();
+            }
+            else{
+                Yii::$app->session->setFlash('error', 'Ошибка');
+            }
+        }
+
+        $masters = Comment::find()->all();
+        return $this -> render('about', compact('model', 'masters'));
+    }
+
     public function actionAdd()
     {
         $id = Yii::$app->request->get('id');
-        print_r($id);
+        $product = Product::findOne($id);
+        if(empty($product)) return false;
+        $session = Yii::$app->session;
+        $session->open();
+        $cart = new Cart();
+        $cart->addToCart($product);
+        $this->layout = false;
+        return $this->render('cart-modal', compact('session'));
     }
 
+    public function actionClear(){
+        $session =Yii::$app->session;
+        $session->open();
+        $session->remove('cart');
+        $session->remove('cart.qty');
+        $session->remove('cart.sum');
+        $this->layout = false;
+        return $this->render('cart-modal', compact('session'));
+    }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-
+    public function actionDelitem(){
+        $id = Yii::$app->request->get('id');
+        $session = Yii::$app->session;
+        $session->open();
+        $cart = new Cart();
+        $cart->recalc($id);
+        $this->layout = false;
+        return $this->render('cart-modal', compact('session'));
+    }
 }

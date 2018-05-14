@@ -10,10 +10,6 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-
-
     <div class="chefs padd">
         <div class="container">
 
@@ -57,6 +53,20 @@ use yii\bootstrap\ActiveForm;
     <div class="testimonial padd">
         <div class="container">
             <div class="row">
+                <div class="row">
+
+                    <div class="footer-widget">
+                        <h4>Комментировать</h4>
+                        <p>Вы можете оставить свои замечания и предложения.</p>
+                        <?php $form = ActiveForm::begin(['options' => ['id' => 'aboutForm']]); ?>
+                        <?= $form->field($model, 'user')?>
+                        <?= $form->field($model, 'comment') ?>
+                        <div class="form-group">
+                            <?= Html::submitButton('Отправить комментарий', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
                 <h3>Отзывы</h3>
                 <?php
                 if (!empty($masters)):?>
@@ -78,20 +88,7 @@ use yii\bootstrap\ActiveForm;
                     <?php  echo '<br>'; echo '<br>'; echo '<br>'; endforeach;?>
                 <?php endif; ?>
             </div>
-            <div class="row">
 
-                <div class="footer-widget">
-                    <h4>Комментировать</h4>
-                    <p>Вы можете оставить свои замечания и предложения.</p>
-                    <?php $form = ActiveForm::begin(['options' => ['id' => 'aboutForm']]); ?>
-                    <?= $form->field($model, 'user')->textInput(['autofocus' => true]) ?>
-                    <?= $form->field($model, 'comment') ?>
-                    <div class="form-group">
-                        <?= Html::submitButton('Отправить комментарий', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
-                    </div>
-                    <?php ActiveForm::end(); ?>
-                </div>
-            </div>
         </div>
     </div>
 </div>

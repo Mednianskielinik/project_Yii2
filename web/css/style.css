@@ -12,7 +12,9 @@ Designed by : http://responsivewebinc.com
 /* 
  * Basic CSS starts
  */
-
+.delitem{
+	cursor: pointer;
+}
 body{
 	background: #fff url('../img/crossword.png') repeat;
 	font-family: 'Open Sans', sans-serif;

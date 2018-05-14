@@ -29,8 +29,8 @@ class AppAsset extends AssetBundle
      ];
 
     public $js = [
-//      'js/jquery.js',
-//      'js/bootstrap.min.js',
+        'js/jquery.js',
+        'js/bootstrap.min.js',
         'js/jquery.prettyPhoto.js',
         'js/respond.min.js',
         'js/html5shiv.js',
