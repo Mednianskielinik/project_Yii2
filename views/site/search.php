@@ -16,7 +16,7 @@
                                 <div class="shopping-item">
                                     <img class="img-responsive" src="<?=$master->img?>" alt="" />
                                     <h4 class="pull-left"><a href="item-single.html"><?=$master->title?></a></h4>
-                                    <span class="item-price pull-right"><?=$master->price?></span>
+                                    <span class="item-price pull-right">$<?=$master->price?></span>
                                     <div class="clearfix"></div>
 
                                     <div class="visible-xs">

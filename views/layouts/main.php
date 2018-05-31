@@ -42,6 +42,7 @@ AppAsset::register($this);
 
     <div class="header">
         <div class="container">
+            <a style="border: #ffee04 2px solid; padding: 9px; border-radius: 5px; box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.63);" href="#" onclick="return getCart()">Мои покупки</a>
 
             <div class="row">
                 <div class="col-md-4 col-sm-5">
@@ -52,8 +53,8 @@ AppAsset::register($this);
                             <h1>CakeFactory</h1>
                         </div>
                     </a>
-                </div>
 
+                </div>
 
                 <?php
                 NavBar::begin(
@@ -116,40 +117,8 @@ AppAsset::register($this);
                     ],
                 ]);
 
-
-
-
                 NavBar::end()
                 ?>
-
-                <!--                <div class="col-md-8 col-sm-7">-->
-                <!--                    <nav class="navbar navbar-default navbar-right" role="navigation">-->
-                <!--                        <div class="container-fluid">-->
-                <!--
-                <!--                            <div class="navbar-header">-->
-                <!--                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
-                <!--                                    <span class="sr-only">Toggle navigation</span>-->
-                <!--                                    <span class="icon-bar"></span>-->
-                <!--                                    <span class="icon-bar"></span>-->
-                <!--                                    <span class="icon-bar"></span>-->
-                <!--                                </button>-->
-                <!--                            </div>-->
-                <!---->
-<!--                                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
-<!--                                                <ul class="nav navbar-nav">-->
-<!--                                                    <li><a href="index.html"><img src="img/nav-menu/nav1.jpg" class="img-responsive" alt="" /> Home</a></li>-->
-<!--                                                    <li class="dropdown">-->
-<!--                                                        <a href="index.html#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/nav-menu/nav4.jpg" class="img-responsive" alt="" /> Shop <b class="caret"></b></a>-->
-<!--                                                        <ul class="dropdown-menu">-->
-<!--                                                            <li><a href="items.html">Shopping</a></li>-->
-<!--                                                            <li><a href="item-single.html">Order Now</a></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </li>-->
-<!--                                                    <li><a href="/site/index.php"><img src="img/nav-menu/nav6.jpg" class="img-responsive" alt="" /> About</a></li>-->
-<!--                                                </ul>-->
-<!--                                            </div>-->
-                <!--                        </div>-->
-
             </div>
             </div>
         </div> <!-- / .container -->
@@ -178,17 +147,50 @@ AppAsset::register($this);
         'id' => 'cart',
         'footer' => '<button type="button" class="btn btn-default"
     data-dismiss="modal">Продолжить покупки </button> 
-    <button type = "button" class="btn btn-primary"> Оформить заказ</button> 
      <button type = "button" class="btn btn-danger" onclick="clearCart()"> Очистить корзину</button> \''
 ]);
 
 \yii\bootstrap\Modal::end();
 ?>
 
+<?php
+\yii\bootstrap\Modal::begin([
+    'header' => '<h2> Ваше мнение учтено </h2>',
+    'id' => 'liky',
+    'footer' => '<button type="button" class="btn btn-default"
+    data-dismiss="modal">Вернуться к блюдам</button> \''
+]);
+\yii\bootstrap\Modal::end();
+?>
+<!--<button type = "button" class="btn btn-primary"> Оформить заказ</button>-->
+
 <span class="totop"><a href="index.html#"><i class="fa fa-angle-up"></i></a></span>
 <!-- FLEX SLIDER SCRIPTS  -->
 
 <?php $this->endBody() ?>
+
+<script>
+
+      function getCart() {
+          $.ajax({
+              url: '<?= \yii\helpers\Url::to(['site/show',''])?>',
+              type: 'GET',
+              success: function (res){
+                  if(!res) alert('Ошибка!');
+                  showCart(res);
+              },
+              error: function () {
+                  alert('Error!');
+              }
+          });
+      }
+
+    function showCart(cart) {
+        $('#cart .modal-body').html(cart);
+        $('#cart').modal();
+    }
+
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

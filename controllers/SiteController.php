@@ -222,4 +222,30 @@ class SiteController extends Controller
         $this->layout = false;
         return $this->render('cart-modal', compact('session'));
     }
+
+    public function actionShow(){
+        $session = Yii::$app->session;
+        $session->open();
+        $this->layout = false;
+        return $this->render('cart-modal', compact('session'));
+    }
+
+    public function actionLik()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = Product::find()->where(['idProduct' => $id])->one();
+        $model->dislike += 1;
+        $model->save();
+        $masters = Product::find()->all();
+        return $this->render('order', compact('masters'));
+    }
+    public function actionDislik()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = Product::find()->where(['idProduct' => $id])->one();
+        $model->dislike += 1;
+        $model->save();
+        $masters = Product::find()->all();
+        return $this->render('order', compact('masters'));
+    }
 }

@@ -14,10 +14,10 @@
         <tbody>
         <?php foreach ($session['cart'] as $id=>$item):?>
              <tr>
-                 <td><img class="img-responsive" src="<?= $item['img']?>" alt="" /></td>
+                 <td><img class="img-responsive"  src="<?= $item['img']?>" alt="" /></td>
                  <td><?= $item['name']?></td>
                  <td><?= $item['qty']?></td>
-                 <td><?= $item['price']?></td>
+                 <td>$<?= $item['price']?></td>
                  <td><span data-id ="<?=$id?>" class="glyphicon glyphicon-remove text-danger delitem"
                            aria-hidden="true"</span></td>
              </tr>
@@ -31,8 +31,30 @@
             <td><?= $session['cart.sum']?></td>
         </tr>
         </tbody>
+        <script>
+
+            $('#cart .modal-body').on('click', '.delitem', function () {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '<?= \yii\helpers\Url::to(['site/delitem',''])?>',
+                    data:{id: id},
+                    type: 'GET',
+                    success: function (res){
+                        if(!res) alert('Ошибка!');
+                        showCart(res);
+                    },
+                    error: function () {
+                        alert('Error!');
+                    }
+                });
+            });
+
+
+        </script>
     </table>
 </div>
 <?php else: ?>
     <h3>Вы ничего не выбрали</h3>
-<?php endif;?>
+<?php endif;
+
+
