@@ -10,6 +10,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $verifyCode;
     /**
      * @inheritdoc
      */
@@ -35,6 +36,7 @@ class SignupForm extends Model
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Такая почта уже занята.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+            ['verifyCode', 'captcha'],
         ];
     }
     /**
@@ -47,13 +49,11 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-
         return $user->save() ? $user : null;
     }
 }

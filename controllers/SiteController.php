@@ -21,6 +21,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
     public function behaviors()
     {
         return [
@@ -233,18 +234,10 @@ class SiteController extends Controller
     public function actionLik()
     {
         $id = Yii::$app->request->get('id');
-        $model = Product::find()->where(['idProduct' => $id])->one();
-        $model->dislike += 1;
-        $model->save();
-        $masters = Product::find()->all();
-        return $this->render('order', compact('masters'));
-    }
-    public function actionDislik()
-    {
-        $id = Yii::$app->request->get('id');
-        $model = Product::find()->where(['idProduct' => $id])->one();
-        $model->dislike += 1;
-        $model->save();
+        $session = Yii::$app->session;
+        $session->open();
+        $cart = new Cart();
+        $cart->liky($id);
         $masters = Product::find()->all();
         return $this->render('order', compact('masters'));
     }

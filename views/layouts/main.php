@@ -100,7 +100,7 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => 'Главная', 'url' => ['/site/index']],
                         ['label' => 'О нас', 'url' => ['/site/about']],
-                        ['label' => 'Смотреть блюда', 'url' => ['/site/order']],
+                        ['label' => 'Смотреть блюда', 'visible' => !(Yii::$app->user->isGuest) ,'url' => ['/site/order']],
                         ['label' => 'Регистрация', 'url' => ['site/signup'], 'visible' => Yii::$app->user->isGuest],
                         Yii::$app->user->isGuest ? (
                         ['label' => 'Войти', 'url' => ['/site/login']]

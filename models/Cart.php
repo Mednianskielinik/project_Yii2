@@ -39,7 +39,19 @@ class Cart extends ActiveRecord
     }
 
     public function liky($id){
-        $_SESSION[$id] = $id;
+        $model = Product::find()->where(['idProduct' => $id])->one();
+        if(empty( $_SESSION['liky'][$id])) {
+            $model->liky += 1;
+            $model->save();
+            $_SESSION['liky'][$id] = $id;
+        }
+        else{
+            $model->liky -= 1;
+            $model->save();
+            $_SESSION['liky'][$id] = "";
+        }
     }
+
+
 
 }

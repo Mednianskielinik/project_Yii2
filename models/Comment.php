@@ -21,6 +21,7 @@ class Comment extends ActiveRecord implements IdentityInterface
     {
         return '{{%comment}}';
     }
+
     /**
      * @inheritdoc
      */

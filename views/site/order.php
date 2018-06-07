@@ -3,7 +3,38 @@
 use yii\helpers\Html;
 
 ?>
-
+<?php
+if (!empty($_SESSION['liky']))
+{
+$p = $_SESSION['liky'];
+$i = 0;
+}
+else{
+$p = "";
+$i = 0;
+}
+?>
+<style>
+    H5 {
+        text-shadow: -1px -1px #FFF,
+        -2px -2px #FFF,
+        -1px 1px #FFF,
+        -2px 2px #FFF,
+        1px 1px #FFF,
+        2px 2px #FFF,
+        1px -1px #FFF,
+        2px -2px #FFF,
+        -3px -3px 2px #BBB,
+        -3px 3px 2px #BBB,
+        3px 3px 2px #BBB,
+        3px -3px 2px #BBB;
+        color: steelblue;
+        transition: all 1s;
+    }
+    H5:hover {
+        color: yellowgreen;
+    }
+</style>
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -19,8 +50,7 @@ use yii\helpers\Html;
                         <?php foreach ($masters as $master): ?>
                         <div class="col-md-3 col-sm-6">
                             <div class="shopping-item">
-                                <span ><a href="<?= \yii\helpers\Url::to(['site/lik', 'id' => $master->idProduct])?>" class="add-lik" data-id="<?=$master->idProduct?>" >Мне нравится</a><?=$master->liky?><br>
-                                    <a href="<?= \yii\helpers\Url::to(['site/dislik', 'id' => $master->idProduct])?>" class="add-dislik" data-id="<?=$master->idProduct?>"> Мне не нравится </a><?=$master->dislike?></span>
+                                <span ><h5><a href="<?= \yii\helpers\Url::to(['site/lik', 'id' => $master->idProduct])?>"   <?php $i++; if (!empty($p[$i])):?>  class="add-dislik" style="color: red; " <?php else: ?> class="add-lik" <?php endif;?> data-id="<?=$master->idProduct?>" >Мне нравится <?=$master->liky?> </a><br></h5>
                                 <img class="img-responsive" src="<?=$master->img?>" alt="" />
                                 <h4 class="pull-left"><?=$master->title?></h4>
                                 <span class="item-price pull-right">$<?=$master->price?></span>
@@ -29,6 +59,7 @@ use yii\helpers\Html;
                                 <a href="<?= \yii\helpers\Url::to(['site/add', 'id' => $master->idProduct])?>" class="link hidden-xs add-to-cart" data-id="<?=$master->idProduct?>" >Заказать</a>
                             </div>
                         </div>
+
                             <?php endforeach;?>
                         <?php endif; ?>
                     </div>
@@ -79,39 +110,6 @@ use yii\helpers\Html;
                     })
                 });
 
-                $('.add-lik').click(function(p){
-                    p.preventDefault();
-                    var id = $(this).data('id');
-                    $.ajax({
-                        url: '<?= \yii\helpers\Url::to(['site/lik',''])?>',
-                        data: {id: id},
-                        type: 'GET',
-                        success: function (res){
-                            if(!res) alert('Ошибка!');
-                            showLiky();
-                        },
-                        error: function () {
-                            alert('Error!');
-                        }
-                    })
-                });
-
-                $('.add-dislik').click(function(p){
-                    p.preventDefault();
-                    var id = $(this).data('id');
-                    $.ajax({
-                        url: '<?= \yii\helpers\Url::to(['site/dislik',''])?>',
-                        data: {id: id},
-                        type: 'GET',
-                        success: function (res){
-                            if(!res) alert('Ошибка!');
-                            showLiky();
-                        },
-                        error: function () {
-                            alert('Error!');
-                        }
-                    })
-                });
             </script>
 </body>
 </html>
